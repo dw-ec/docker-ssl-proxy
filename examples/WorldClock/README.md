@@ -4,7 +4,7 @@ The purpose of this demonstration is to show multiple containers all using the
 same shared SSL CA (certificate authority), and being able to make HTTPS
 connections to one another without any errors about untrusted certificates.
 
-## Demo web services
+## Web services
 
 There are 2 simple python-flask web services with the following functions:
 
@@ -13,7 +13,7 @@ There are 2 simple python-flask web services with the following functions:
 - clock_service: Returns the current time when you visit any valid subdomain 
 and city e.g: http://america.clock.demo/los_angeles 
 
-## Demo docker-ssl-proxy services
+## Docker-ssl-proxy services
 
 Each web service has its own docker-ssl-proxy container for fielding https
 requests:
@@ -37,9 +37,11 @@ E.g:
 
 ## Trying out the demo
 
-1. docker-compose build
+```
+# docker-compose build
 
-2. docker-compose up
+# docker-compose up
+```
 
 ### Configuring Linux workstation so you can browse the services
 
@@ -91,8 +93,10 @@ dhcp-option DNS 8.8.4.4
 comp-lzo no
 ```
 
-Once imported, connect to the Docker internal network VPN and you should be
-able to browse the demo container urls like https://hello.demo/
+Once imported, you may need to set `☑️ Allow changes to manually-set network settings`
+within tunnelblick's UI.
+Connect to the Docker internal network VPN and you should now be able to browse the
+demo container urls like https://hello.demo/
 
 To trust the project's CA certificate, just do:
 ```
