@@ -1,0 +1,9 @@
+FROM python:3
+
+RUN pip install flask flask_restful
+
+ADD clock-server.sh /
+ADD clock-server.py /
+
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENTRYPOINT [ "/clock-server.sh" ]

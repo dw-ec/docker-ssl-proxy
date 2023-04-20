@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+
+  hello_service:
+    build:
+      context: .
+      dockerfile: Dockerfile-hello
+    volumes:
+      - "./https-proxy-ca:/etc/ssl/shared-ca"
+    networks:
+      demo:
+        aliases:
+          - hello.demo
+
+  hello_proxy:
+    build:
+      context: ../..
+    environment:
+      DOMAIN: hello.demo
+      TARGET_HOST: hello_service
+    volumes:
+      - "./https-proxy-ca:/etc/nginx/ca"
+    network_mode: "service:hello_service"
+
+  clock_service:
+    build:
+      context: .
+      dockerfile: Dockerfile-clock
+    volumes:
+      - "./https-proxy-ca:/etc/ssl/shared-ca"
+    networks:
+      demo:
+        aliases:
+          - clock.demo
+          - africa.clock.demo
+          - america.clock.demo
+          - antarctica.clock.demo
+          - arctic.clock.demo
+          - asia.clock.demo
+          - atlantic.clock.demo
+          - australia.clock.demo
+          - europe.clock.demo
+          - indian.clock.demo
+          - pacific.clock.demo
+
+  clock_proxy:
+    build: ../..
+    environment:
+      DOMAIN: clock.demo
+      TARGET_HOST: clock_service
+      ALT_NAMES: >-
+        africa.clock.demo
+        america.clock.demo
+        antarctica.clock.demo
+        arctic.clock.demo
+        asia.clock.demo
+        atlantic.clock.demo
+        australia.clock.demo
+        europe.clock.demo
+        indian.clock.demo
+        pacific.clock.demo
+    volumes:
+      - "./https-proxy-ca:/etc/nginx/ca"
+    network_mode: "service:clock_service"
+
+  dns_proxy:
+    image: 4km3/dnsmasq
+    networks:
+      demo:
+        ipv4_address: 192.168.69.53
+    cap_add:
+      - NET_ADMIN
+    restart: always
+
+networks:
+  demo:    
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.69.0/24
+          gateway: 192.168.69.1
+

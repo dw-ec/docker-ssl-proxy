@@ -1,0 +1,9 @@
+FROM python:3
+
+RUN pip install flask flask_restful requests
+
+ADD hello-server.sh /
+ADD hello-server.py /
+
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENTRYPOINT [ "/hello-server.sh" ]
