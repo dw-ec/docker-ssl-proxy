@@ -54,6 +54,9 @@ by connecting an volume onto ``/etc/nginx/certs`` with following files inside:
 
 The certificate generator will check on existing ``key.pem`` and abort.
 
+## Docker-compose demo project
+A full docker-compose project demonstrating various features of docker-ssl-proxy can be found under [examples/WorldClock](./examples/WorldClock).
+
 ## Docker Hub Image
 
 You can get the publicly available docker image at
