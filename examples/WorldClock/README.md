@@ -80,6 +80,11 @@ an exercise for the user.
 
 ### Configuring a Mac OSX workstation so you can browse the services
 
+To trust the project's CA certificate, just do:
+```
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain https-proxy-ca/rootCA.crt
+```
+
 Docker for Mac doesn't give you network access to your docker environment. I.e.
 it's very broken. To browse your containers you'll need to essentially VPN in
 to your Docker environment: https://github.com/wojas/docker-mac-network
@@ -96,11 +101,10 @@ comp-lzo no
 ```
 
 Once imported, you may need to set `☑️ Allow changes to manually-set network settings`
-within tunnelblick's UI.
+within tunnelblick's UI (VPN details -> docker-for-mac -> Settings -> Advanced).
+
 Connect to the Docker internal network VPN and you should now be able to browse the
 demo container urls like https://hello.demo/
 
-To trust the project's CA certificate, just do:
-```
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain https-proxy-ca/rootCA.crt
-```
+If your browser is using secure DNS, it may completely bypass your custom Docker-DNS
+resolver. In that case, disable secure DNS in your browser settings.
