@@ -4,6 +4,8 @@ The purpose of this demonstration is to show multiple containers all using the
 same shared SSL CA (certificate authority), and being able to make HTTPS
 connections to one another without any errors about untrusted certificates.
 
+See [docker-compose.yml](./docker-compose.yml) for details.
+
 ## Web services
 
 There are 2 simple python-flask web services with the following functions:
